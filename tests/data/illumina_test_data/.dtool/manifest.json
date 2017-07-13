@@ -1,0 +1,34 @@
+{
+  "file_list": [
+    {
+      "hash": "42889f278935f206dcf2772c81a055b338844c48",
+      "size": 361,
+      "mtime": 1499960581.0,
+      "mimetype": "text/plain",
+      "path": "reads_1.fq"
+    },
+    {
+      "hash": "40ed0c9553797c66cfa07cefb37af9086a5da66b",
+      "size": 225,
+      "mtime": 1499960581.0,
+      "mimetype": "application/x-gzip",
+      "path": "reads_1.fq.gz"
+    },
+    {
+      "hash": "3ba1430aac3bc8fb940d673f43aaf83c7150e8f0",
+      "size": 361,
+      "mtime": 1499960602.0,
+      "mimetype": "text/plain",
+      "path": "reads_2.fq"
+    },
+    {
+      "hash": "0cd70e79a9e4cbb10c5d846031894472a9b4d6de",
+      "size": 224,
+      "mtime": 1499960602.0,
+      "mimetype": "application/x-gzip",
+      "path": "reads_2.fq.gz"
+    }
+  ],
+  "dtool_version": "0.12.1",
+  "hash_function": "shasum"
+}

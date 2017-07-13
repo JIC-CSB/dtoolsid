@@ -1,0 +1,1 @@
+{"uuid": "192f8a99-a491-43f3-85e1-862a3b781dae", "readme_path": "README.yml", "dtool_version": "0.12.1", "type": "dataset", "name": "illumina_test_data", "manifest_path": ".dtool/manifest.json", "overlays_path": ".dtool/overlays", "creator_username": "hartleym", "manifest_root": "data"}
