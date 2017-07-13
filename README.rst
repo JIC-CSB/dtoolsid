@@ -3,7 +3,7 @@ dtoolsid
 
 Experimental command line for dtool functionality testing.
 
-The name sid is borrowed from Debian's testing branch (and hence from Toy Story!).
+The name sid is borrowed from Debian's unstable branch (and hence from Toy Story!).
 
 Installation
 ------------
