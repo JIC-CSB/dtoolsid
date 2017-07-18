@@ -6,7 +6,7 @@ import tempfile
 
 import pytest
 
-from dtool import DataSet
+from dtoolcore import DataSet
 
 _HERE = os.path.dirname(__file__)
 ILLUMINA_DATASET_PATH = os.path.join(_HERE, 'data', 'illumina_test_data')
