@@ -40,3 +40,10 @@ def parse_fastq_title_line(fastq_title_line):
         for (name, cast_func), component
         in zip(component_names, components)
     }
+
+
+def extract_metadata_from_fastq_file_object(fh):
+
+    first_line = fh.readline().strip()
+
+    return parse_fastq_title_line(first_line)
