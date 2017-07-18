@@ -81,16 +81,15 @@ def dataset_fixture(request):
 
 
 @pytest.fixture
-def project_fixture(request):
-    project_path = tempfile.mkdtemp()
+def collection_fixture(request):
+    collection_path = tempfile.mkdtemp()
 
-    project_name = "crop_yield"
-    project = dtoolcore.Collection()
-    project.persist_to_path(project_path)
+    collection = dtoolcore.Collection()
+    collection.persist_to_path(collection_path)
 
     for ds_name in ["rice", "wheat", "barley"]:
 
-        ds_path = os.path.join(project_path, ds_name)
+        ds_path = os.path.join(collection_path, ds_name)
         os.mkdir(ds_path)
 
         dataset = dtoolcore.DataSet(ds_name, "data")
@@ -106,5 +105,5 @@ def project_fixture(request):
 
     @request.addfinalizer
     def teardown():
-        shutil.rmtree(project_path)
-    return project_path
+        shutil.rmtree(collection_path)
+    return collection_path
