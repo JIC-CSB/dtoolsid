@@ -41,7 +41,8 @@ def dataset():
 
 @dataset.command()
 @dataset_path_option
-def identifiers(path):
+def identifiers(path,):
+    """Echo the identifiers in the dataset."""
     dataset = dtoolcore.DataSet.from_path(path)
     click.secho("\n".join(dataset.identifiers))
 
@@ -49,6 +50,7 @@ def identifiers(path):
 @dataset.command()
 @dataset_path_option
 def paths(path):
+    """Echo the paths to the files in the dataset."""
     dataset = dtoolcore.DataSet.from_path(path)
 
     paths = [dataset.abspath_from_identifier(identifier)
@@ -60,6 +62,7 @@ def paths(path):
 @dataset.command()
 @dataset_path_option
 def manifest(path):
+    """Echo the JSON manifest file."""
     dataset = dtoolcore.DataSet.from_path(path)
     formatted_json = json.dumps(dataset.manifest, indent=2)
     colorful_json = pygments.highlight(
@@ -72,6 +75,7 @@ def manifest(path):
 @dataset.command()
 @dataset_path_option
 def summary(path):
+    """Echo a JSON summary of the dataset."""
     dataset = dtoolcore.DataSet.from_path(path)
     file_list = dataset.manifest["file_list"]
     total_size = sum([f["size"] for f in file_list])
@@ -95,6 +99,7 @@ def summary(path):
 @dataset.command()
 @dataset_path_option
 def verify(path):
+    """Verify the integrity of the dataset."""
     all_good = True
     dataset = dtoolcore.DataSet.from_path(path)
     manifest_data_paths = []
@@ -138,6 +143,7 @@ def collection():
 @collection.command()  # NOQA
 @collection_path_option
 def summary(path):  # NOQA
+    """Echo a json summary of the collection."""
     # The below will raise if the directory is not a collection.
     dtoolcore.Collection.from_path(path)
 
