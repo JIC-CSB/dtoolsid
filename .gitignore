@@ -1,6 +1,10 @@
+.coverage
+
 *.pyc
 *.swp
 
 *.egg-info/
 
+.cache/
 env/
+.tox/
