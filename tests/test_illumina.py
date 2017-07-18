@@ -1,9 +1,9 @@
 """Test illumina module."""
 
-from . import tmp_illumina_dataset
+from . import tmp_illumina_dataset  # NOQA
 
 
-def test_tmp_dataset_fixture(tmp_illumina_dataset):
+def test_tmp_dataset_fixture(tmp_illumina_dataset):  # NOQA
 
     assert len(tmp_illumina_dataset.identifiers) == 4
 
