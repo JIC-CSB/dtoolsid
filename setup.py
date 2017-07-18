@@ -15,7 +15,7 @@ setup(name="dtoolsid",
       url=url,
       install_requires=[
           "click",
-          "dtool",
+          "dtoolcore",
           "pygments",
       ],
       entry_points={
