@@ -97,7 +97,9 @@ def summary(dataset_path):
 @click.argument('new_dataset_path')
 def template(dataset_path, new_dataset_path):
     """Create new empty dataset with metadata from existing dataset."""
-    parent_dir, dataset_name = os.path.split(new_dataset_path)
+    parent_dataset = dtoolcore.DataSet.from_path(dataset_path)
+
+    output_dir, dataset_name = os.path.split(new_dataset_path)
 
     # There are ways of doing this that result in error messages where
     # the specific offending argument is highlighted.
@@ -106,14 +108,17 @@ def template(dataset_path, new_dataset_path):
         raise click.BadParameter(
             "Path already exists: {}".format(new_dataset_path)
         )
-    if not os.path.isdir(parent_dir):
+    if not os.path.isdir(output_dir):
         raise click.BadParameter(
-            "Parent directory does not exist: {}".format(parent_dir)
+            "Output directory does not exist: {}".format(output_dir)
         )
 
+    # Create empty dataset
     new_dataset = dtoolcore.DataSet(dataset_name, data_directory="data")
     os.mkdir(new_dataset_path)
     new_dataset.persist_to_path(new_dataset_path)
+
+    # Template the descriptive metadata.
 
 
 @dataset.command()
