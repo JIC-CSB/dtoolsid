@@ -88,3 +88,18 @@ def test_extract_metadata_from_fastq_file(tmp_illumina_dataset):  # NOQA
     result = extract_metadata_from_fastq_file(fastq_gz_filename)
 
     check_fastq_read_1_sample_result(result)
+
+
+def test_create_illumina_metadata_overlay(tmp_illumina_dataset):
+
+    from dtoolsid.illumina import create_illumina_metadata_overlay
+
+    create_illumina_metadata_overlay(tmp_illumina_dataset)
+
+    overlays = tmp_illumina_dataset.access_overlays()
+
+    assert "illumina_metadata" in overlays
+
+    first_identifier = "42889f278935f206dcf2772c81a055b338844c48"
+    first_metadata = overlays["illumina_metadata"][first_identifier]
+    check_fastq_read_1_sample_result(first_metadata)

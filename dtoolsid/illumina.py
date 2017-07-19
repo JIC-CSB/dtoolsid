@@ -1,5 +1,6 @@
 """Module for working with Illumina FASTQ files."""
 
+import os
 import gzip
 
 
@@ -66,3 +67,23 @@ def extract_metadata_from_fastq_file(filename):
             metadata = extract_metadata_from_fastq_file_object(fh)
 
     return metadata
+
+
+def create_illumina_metadata_overlay(dataset):
+    """Create overlay derived from Illumina FQ metadata, and write it to
+    dataset."""
+
+    illumina_metadata_overlay = dataset.empty_overlay()
+
+    for identifier in dataset.identifiers:
+        abspath = dataset.abspath_from_identifier(identifier)
+        basename = os.path.basename(abspath)
+        _, ext = basename.split('.', 1)
+        if ext in ['fq', 'fq.gz']:
+            metadata = extract_metadata_from_fastq_file(abspath)
+            illumina_metadata_overlay[identifier] = metadata
+
+    dataset.persist_overlay(
+        "illumina_metadata",
+        illumina_metadata_overlay
+    )
