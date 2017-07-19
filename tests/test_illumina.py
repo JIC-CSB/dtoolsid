@@ -90,7 +90,7 @@ def test_extract_metadata_from_fastq_file(tmp_illumina_dataset):  # NOQA
     check_fastq_read_1_sample_result(result)
 
 
-def test_create_illumina_metadata_overlay(tmp_illumina_dataset):
+def test_create_illumina_metadata_overlay(tmp_illumina_dataset):  # NOQA
 
     from dtoolsid.illumina import create_illumina_metadata_overlay
 

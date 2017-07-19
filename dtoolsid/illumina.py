@@ -78,6 +78,8 @@ def create_illumina_metadata_overlay(dataset):
     for identifier in dataset.identifiers:
         abspath = dataset.abspath_from_identifier(identifier)
         basename = os.path.basename(abspath)
+        # 1 parameter ensures that split stops after the first .,
+        # i.e. foo.fq.gz becomes fq.gz
         _, ext = basename.split('.', 1)
         if ext in ['fq', 'fq.gz']:
             metadata = extract_metadata_from_fastq_file(abspath)
