@@ -122,11 +122,15 @@ def template(dataset_path, new_dataset_path):
 
     # Template the descriptive metadata.
     with open(parent_dataset.abs_readme_path) as fh:
-        parent_metadata = yaml.load(fh)
+        descriptive_metadata = yaml.load(fh)
+
+    # Need explicit call to str() to ensure pyyaml does not mark up the dataset name
+    # with Unicode type in Python 2.
+    descriptive_metadata["dataset_name"] = str(dataset_name)
 
     with open(new_dataset.abs_readme_path, "w") as fh:
         yaml.dump(
-            parent_metadata,
+            descriptive_metadata,
             fh,
             explicit_start=True,
             default_flow_style=False)
