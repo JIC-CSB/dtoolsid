@@ -125,7 +125,11 @@ def template(dataset_path, new_dataset_path):
         parent_metadata = yaml.load(fh)
 
     with open(new_dataset.abs_readme_path, "w") as fh:
-        yaml.dump(parent_metadata, fh)
+        yaml.dump(
+            parent_metadata,
+            fh,
+            explicit_start=True,
+            default_flow_style=False)
 
 
 @dataset.command()
