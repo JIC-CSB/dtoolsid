@@ -12,11 +12,11 @@ import pygments.formatters
 from dtoolsid import __version__
 
 dataset_path_option = click.argument(
-    'path',
+    'dataset_path',
     type=click.Path(exists=True))
 
 collection_path_option = click.argument(
-    'path',
+    'collection_path',
     type=click.Path(exists=True))
 
 
@@ -37,17 +37,17 @@ def dataset():
 
 @dataset.command()
 @dataset_path_option
-def identifiers(path,):
+def identifiers(dataset_path,):
     """Echo the identifiers in the dataset."""
-    dataset = dtoolcore.DataSet.from_path(path)
+    dataset = dtoolcore.DataSet.from_path(dataset_path)
     click.secho("\n".join(dataset.identifiers))
 
 
 @dataset.command()
 @dataset_path_option
-def paths(path):
+def paths(dataset_path):
     """Echo the paths to the files in the dataset."""
-    dataset = dtoolcore.DataSet.from_path(path)
+    dataset = dtoolcore.DataSet.from_path(dataset_path)
 
     paths = [dataset.abspath_from_identifier(identifier)
              for identifier in dataset.identifiers]
@@ -57,9 +57,9 @@ def paths(path):
 
 @dataset.command()
 @dataset_path_option
-def manifest(path):
+def manifest(dataset_path):
     """Echo the JSON manifest file."""
-    dataset = dtoolcore.DataSet.from_path(path)
+    dataset = dtoolcore.DataSet.from_path(dataset_path)
     formatted_json = json.dumps(dataset.manifest, indent=2)
     colorful_json = pygments.highlight(
         formatted_json,
@@ -70,9 +70,9 @@ def manifest(path):
 
 @dataset.command()
 @dataset_path_option
-def summary(path):
+def summary(dataset_path):
     """Echo a JSON summary of the dataset."""
-    dataset = dtoolcore.DataSet.from_path(path)
+    dataset = dtoolcore.DataSet.from_path(dataset_path)
     file_list = dataset.manifest["file_list"]
     total_size = sum([f["size"] for f in file_list])
 
@@ -94,10 +94,10 @@ def summary(path):
 
 @dataset.command()
 @dataset_path_option
-def verify(path):
+def verify(dataset_path):
     """Verify the integrity of the dataset."""
     all_good = True
-    dataset = dtoolcore.DataSet.from_path(path)
+    dataset = dtoolcore.DataSet.from_path(dataset_path)
     manifest_data_paths = []
     for i in dataset.identifiers:
         fpath = dataset.abspath_from_identifier(i)
@@ -112,7 +112,7 @@ def verify(path):
             all_good = False
             continue
 
-    abs_data_directory = os.path.join(path, dataset.data_directory)
+    abs_data_directory = os.path.join(dataset_path, dataset.data_directory)
     existing_data_paths = []
     for root, dirs, files in os.walk(abs_data_directory):
         for f in files:
@@ -138,16 +138,17 @@ def collection():
 
 @collection.command()  # NOQA
 @collection_path_option
-def summary(path):  # NOQA
+def summary(collection_path):  # NOQA
     """Echo a json summary of the collection."""
     # The below will raise if the directory is not a collection.
-    dtoolcore.Collection.from_path(path)
+    dtoolcore.Collection.from_path(collection_path)
 
     num_datasets = 0
     num_files = 0
     tot_size = 0
 
-    child_paths = [os.path.join(path, p) for p in os.listdir(path)]
+    child_paths = [os.path.join(collection_path, p)
+                   for p in os.listdir(collection_path)]
     child_dirs = [d for d in child_paths if os.path.isdir(d)]
 
     for d in child_dirs:
