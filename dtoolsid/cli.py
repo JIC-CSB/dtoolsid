@@ -94,6 +94,26 @@ def summary(dataset_path):
 
 @dataset.command()
 @dataset_path_option
+@click.argument('new_dataset_path')
+def template(dataset_path, new_dataset_path):
+    """Create new empty dataset with metadata from existing dataset."""
+    parent_dir, dataset_name = os.path.split(new_dataset_path)
+
+    # There are ways of doing this that result in error messages where
+    # the specific offending argument is highlighted.
+    # http://click.pocoo.org/5/options/#callbacks-for-validation
+    if os.path.exists(new_dataset_path):
+        raise click.BadParameter("Path already exists: {}".format(new_dataset_path))
+    if not os.path.isdir(parent_dir):
+        raise click.BadParameter("Parent directory does not exist: {}".format(parent_dir))
+
+    new_dataset = dtoolcore.DataSet(dataset_name, data_directory="data")
+    os.mkdir(new_dataset_path)
+    new_dataset.persist_to_path(new_dataset_path)
+
+
+@dataset.command()
+@dataset_path_option
 def verify(dataset_path):
     """Verify the integrity of the dataset."""
     all_good = True
