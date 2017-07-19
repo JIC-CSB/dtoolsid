@@ -103,9 +103,13 @@ def template(dataset_path, new_dataset_path):
     # the specific offending argument is highlighted.
     # http://click.pocoo.org/5/options/#callbacks-for-validation
     if os.path.exists(new_dataset_path):
-        raise click.BadParameter("Path already exists: {}".format(new_dataset_path))
+        raise click.BadParameter(
+            "Path already exists: {}".format(new_dataset_path)
+        )
     if not os.path.isdir(parent_dir):
-        raise click.BadParameter("Parent directory does not exist: {}".format(parent_dir))
+        raise click.BadParameter(
+            "Parent directory does not exist: {}".format(parent_dir)
+        )
 
     new_dataset = dtoolcore.DataSet(dataset_name, data_directory="data")
     os.mkdir(new_dataset_path)
