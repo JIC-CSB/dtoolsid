@@ -13,13 +13,11 @@ from dtoolsid import __version__
 
 dataset_path_option = click.argument(
     'path',
-    'Path to dataset directory',
     default=".",
     type=click.Path(exists=True))
 
 collection_path_option = click.argument(
     'path',
-    'Path to collection directory',
     default=".",
     type=click.Path(exists=True))
 
