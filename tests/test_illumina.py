@@ -1,9 +1,9 @@
 """Test illumina module."""
 
-from . import tmp_illumina_dataset
+from . import tmp_illumina_dataset  # NOQA
 
 
-def test_tmp_dataset_fixture(tmp_illumina_dataset):
+def test_tmp_dataset_fixture(tmp_illumina_dataset):  # NOQA
 
     assert len(tmp_illumina_dataset.identifiers) == 4
 
@@ -50,7 +50,7 @@ def test_parse_fastq_title_line_sample_num_edge_case():
     assert result["index_sequence"] == "2"
 
 
-def test_extract_metadata_from_fastq_file(tmp_illumina_dataset):
+def test_extract_metadata_from_fastq_file_object(tmp_illumina_dataset):  # NOQA
 
     from dtoolsid.illumina import extract_metadata_from_fastq_file_object
 
@@ -61,5 +61,30 @@ def test_extract_metadata_from_fastq_file(tmp_illumina_dataset):
 
     with open(fastq_filename) as fh:
         result = extract_metadata_from_fastq_file_object(fh)
+
+    check_fastq_read_1_sample_result(result)
+
+
+def test_extract_metadata_from_fastq_file(tmp_illumina_dataset):  # NOQA
+
+    from dtoolsid.illumina import extract_metadata_from_fastq_file
+
+    # Test plaintext fastq file
+    fastq_file_identifier = "42889f278935f206dcf2772c81a055b338844c48"
+    fastq_filename = tmp_illumina_dataset.abspath_from_identifier(
+        fastq_file_identifier
+    )
+
+    result = extract_metadata_from_fastq_file(fastq_filename)
+
+    check_fastq_read_1_sample_result(result)
+
+    # Test a gzipped fastq file
+    fastq_gz_file_identifier = "40ed0c9553797c66cfa07cefb37af9086a5da66b"
+    fastq_gz_filename = tmp_illumina_dataset.abspath_from_identifier(
+        fastq_gz_file_identifier
+    )
+
+    result = extract_metadata_from_fastq_file(fastq_gz_filename)
 
     check_fastq_read_1_sample_result(result)

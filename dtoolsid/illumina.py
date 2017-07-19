@@ -1,5 +1,7 @@
 """Module for working with Illumina FASTQ files."""
 
+import gzip
+
 
 def parse_fastq_title_line(fastq_title_line):
 
@@ -46,4 +48,21 @@ def extract_metadata_from_fastq_file_object(fh):
 
     first_line = fh.readline().strip()
 
+    try:
+        first_line = first_line.decode('utf-8')
+    except AttributeError:
+        pass
+
     return parse_fastq_title_line(first_line)
+
+
+def extract_metadata_from_fastq_file(filename):
+
+    try:
+        with open(filename) as fh:
+            metadata = extract_metadata_from_fastq_file_object(fh)
+    except UnicodeDecodeError:
+        with gzip.open(filename, 'rb') as fh:
+            metadata = extract_metadata_from_fastq_file_object(fh)
+
+    return metadata
