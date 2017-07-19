@@ -61,6 +61,21 @@ def tmp_illumina_dataset(request):
 
 
 @pytest.fixture
+def tmp_illumina_dataset_directory(request):
+    d = tempfile.mkdtemp()
+
+    subd = os.path.join(d, 'sub')
+
+    shutil.copytree(ILLUMINA_DATASET_PATH, subd)
+
+    @request.addfinalizer
+    def teatdown():
+        shutil.rmtree(d)
+
+    return subd
+
+
+@pytest.fixture
 def dataset_fixture(request):
     d = tempfile.mkdtemp()
 

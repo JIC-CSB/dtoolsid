@@ -4,6 +4,7 @@ import os
 import subprocess
 
 from . import dataset_fixture  # NOQA
+from . import tmp_illumina_dataset_directory  # NOQA
 
 
 def test_version():
@@ -83,3 +84,23 @@ def test_dataset_verify(dataset_fixture):  # NOQA
         fh.write("different content")
     message_str = subprocess.check_output(cmd).decode("utf-8")
     assert message_str.strip() == "Altered file: {}".format(fpath)
+
+
+def test_dataset_overlay_illumina(tmp_illumina_dataset_directory):
+    import dtoolcore
+
+    expected_overlay_path = os.path.join(
+        tmp_illumina_dataset_directory,
+        ".dtool",
+        "overlays",
+        "illumina_metadata.json"
+    )
+
+    assert not os.path.isfile(expected_overlay_path)
+
+    cmd = ["dtoolsid", "dataset", "overlay", "illumina",
+           tmp_illumina_dataset_directory]
+    message_str = subprocess.check_output(cmd).decode("utf-8")
+    assert message_str.strip() == ""
+
+    assert os.path.isfile(expected_overlay_path)
