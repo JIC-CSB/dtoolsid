@@ -3,6 +3,8 @@
 import os
 import json
 
+import yaml
+
 import click
 import dtoolcore
 import pygments
@@ -113,12 +115,17 @@ def template(dataset_path, new_dataset_path):
             "Output directory does not exist: {}".format(output_dir)
         )
 
-    # Create empty dataset
+    # Create empty dataset
     new_dataset = dtoolcore.DataSet(dataset_name, data_directory="data")
     os.mkdir(new_dataset_path)
     new_dataset.persist_to_path(new_dataset_path)
 
     # Template the descriptive metadata.
+    with open(parent_dataset.abs_readme_path) as fh:
+        parent_metadata = yaml.load(fh)
+
+    with open(new_dataset.abs_readme_path, "w") as fh:
+        yaml.dump(parent_metadata, fh)
 
 
 @dataset.command()
