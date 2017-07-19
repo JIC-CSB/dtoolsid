@@ -163,9 +163,25 @@ def verify(dataset_path):
         click.secho("All good :)".format(fpath), fg="green")
 
 
+@dataset.group()
+def overlay():
+    pass
+
+
+@overlay.command()
+@dataset_path_option
+def illumina(dataset_path):
+    """Create illumina metadata overlay for a dataset."""
+
+    from dtoolsid.illumina import create_illumina_metadata_overlay
+    dataset = dtoolcore.DataSet.from_path(dataset_path)
+
+    create_illumina_metadata_overlay(dataset)
+
 #############################################################################
 # datademo collection
 #############################################################################
+
 
 @cli.group()
 def collection():

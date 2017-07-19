@@ -103,3 +103,8 @@ def test_create_illumina_metadata_overlay(tmp_illumina_dataset):  # NOQA
     first_identifier = "42889f278935f206dcf2772c81a055b338844c48"
     first_metadata = overlays["illumina_metadata"][first_identifier]
     check_fastq_read_1_sample_result(first_metadata)
+
+    first_gz_identifier = "40ed0c9553797c66cfa07cefb37af9086a5da66b"
+    first_gz_metadata = overlays["illumina_metadata"][first_gz_identifier]
+    check_fastq_read_1_sample_result(first_gz_metadata)
+

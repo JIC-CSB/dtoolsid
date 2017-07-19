@@ -3,6 +3,8 @@
 import os
 import gzip
 
+from dtoolsid.utils import is_file_extension_in_list
+
 
 def parse_fastq_title_line(fastq_title_line):
 
@@ -77,11 +79,8 @@ def create_illumina_metadata_overlay(dataset):
 
     for identifier in dataset.identifiers:
         abspath = dataset.abspath_from_identifier(identifier)
-        basename = os.path.basename(abspath)
-        # 1 parameter ensures that split stops after the first .,
-        # i.e. foo.fq.gz becomes fq.gz
-        _, ext = basename.split('.', 1)
-        if ext in ['fq', 'fq.gz']:
+
+        if is_file_extension_in_list(abspath, ['fq', 'fq.gz']):
             metadata = extract_metadata_from_fastq_file(abspath)
             illumina_metadata_overlay[identifier] = metadata
 
