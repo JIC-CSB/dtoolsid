@@ -2,6 +2,7 @@
 
 import os
 import json
+import datetime
 
 import yaml
 
@@ -124,9 +125,13 @@ def template(dataset_path, new_dataset_path):
     with open(parent_dataset.abs_readme_path) as fh:
         descriptive_metadata = yaml.load(fh)
 
-    # Need explicit call to str() to ensure pyyaml does not mark up the dataset name
-    # with Unicode type in Python 2.
+    # Need explicit call to str() to ensure pyyaml does not mark up data with
+    # Python types.
     descriptive_metadata["dataset_name"] = str(dataset_name)
+    descriptive_metadata["creation_date"] = str(datetime.date.today())
+
+    descriptive_metadata["parent_dataset"] = dict(path=parent_dataset._abs_path,
+                                                  uuid=str(parent_dataset.uuid))
 
     with open(new_dataset.abs_readme_path, "w") as fh:
         yaml.dump(
