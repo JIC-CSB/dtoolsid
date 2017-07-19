@@ -25,7 +25,7 @@ collection_path_option = click.argument(
 @click.group()
 @click.version_option(version=__version__)
 def cli():
-    pass
+    """Command line utility to work with dtool datasets and collections."""
 
 
 #############################################################################
@@ -34,7 +34,7 @@ def cli():
 
 @cli.group()
 def dataset():
-    pass
+    """Commands to work on a dataset."""
 
 
 @dataset.command()
@@ -165,7 +165,7 @@ def verify(dataset_path):
 
 @dataset.group()
 def overlay():
-    pass
+    "Annotate the items in a dataset with an overlay."
 
 
 @overlay.command()
@@ -185,7 +185,7 @@ def illumina(dataset_path):
 
 @cli.group()
 def collection():
-    pass
+    """Commands to work on a collection of datasets."""
 
 
 @collection.command()  # NOQA
