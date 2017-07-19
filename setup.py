@@ -17,6 +17,7 @@ setup(name="dtoolsid",
           "click",
           "dtoolcore",
           "pygments",
+          "pyyaml",
       ],
       entry_points={
           'console_scripts': ['dtoolsid=dtoolsid.cli:cli']
