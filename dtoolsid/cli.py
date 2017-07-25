@@ -102,6 +102,7 @@ def template(dataset_path, new_dataset_path):
     """Create new empty dataset with metadata from existing dataset."""
     parent_dataset = dtoolcore.DataSet.from_path(dataset_path)
 
+    new_dataset_path = os.path.abspath(new_dataset_path)
     output_dir, dataset_name = os.path.split(new_dataset_path)
 
     # There are ways of doing this that result in error messages where
